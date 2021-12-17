@@ -1,60 +1,80 @@
-<div class="alert alert-info" role="alert">
-  Username: mor_2314 \\
-  Password: 83r5^_
+<div class="container-fluid full-width-image">
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="container">
+        <div class="card col-md-6 mt-3 mx-auto">
+          <div class="card-body">
+            <!-- <h4 class="card-title text-center">
+              <fa-icon icon="user-circle" size="3x"></fa-icon>
+            </h4> -->
+            <h4 class="card-title mb-4">Đăng nhập</h4>
+            <div>
+              <div [hidden]="!error" class="alert alert-danger">
+                {{ error }}
+              </div>
+
+              <fieldset [disabled]="isLoading">
+                <form [formGroup]="loginForm">
+                    <!-- <div class="form-group">
+                      <label class="d-block">
+                        <input type="text" class="form-control" placeholder="Username" #userName>
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label class="d-block">
+                        <input type="password" name="password" autocomplete="on" class="form-control" placeholder="Password" #userPassword>
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary btn-block btn-raised" type="button" (click)="authService.signIn(userName.value, userPassword.value)">
+                        <span [hidden]="isLoading">Đăng nhập</span>
+                        <span [hidden]="!isLoading">
+                          <fa-icon icon="asterisk" size="3x" [spin]="true"></fa-icon>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="form-group">
+                      <span class="or"><span class="orInner">Or</span></span>
+                    </div>
+
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary btn-block btn-danger text-white" (click)="authService.googleAuth()">
+                        <i class="fab fa-google-plus-g"></i>
+                        Đăng nhập bằng Google
+                      </button>
+                    </div>
+
+                    <div class="form-group">
+                      <span class="or"><span class="orInner">Or</span></span>
+                    </div> -->
+
+                   <div class="form-group">
+                      <label class="d-block">
+                        <input type="text" class="form-control" placeholder="Số Điện thoại"  formControlName="phoneNumber">
+                        <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
+                      </label>
+                    </div>
+
+                    <div class="form-group">
+                      <div id="recaptcha-container"></div>
+                      <button type="submit" class="btn btn-primary btn-block btn-raised" type="button" [disabled]="loginForm.invalid" (click)="loginInPhone(phoneNumber.value)" >
+                        <span [hidden]="isLoading">Tiếp theo</span>
+                      </button>
+                    </div>
+
+                    <ngx-otp-input [config]="otpInputConfig" (otpChange)="handeOtpChange($event)" (fill)="handleFillEvent($event)">
+                    </ngx-otp-input>
+
+                    <!-- <a [routerLink]="['/auth/register']">Don't have an account? Sign up here!</a> -->
+                </form>
+              </fieldset>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div [hidden]="!error" class="alert alert-danger">
-  {{ error }}
-</div>
 
-<fieldset [disabled]="isLoading">
-  <form (ngSubmit)="login()" [formGroup]="loginForm">
-      <!-- <div class="form-group">
-        <label class="d-block">
-          <input type="text" class="form-control" placeholder="Điện thoại" formControlName="phoneNumber">
-          <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
-        </label>
-      </div>
-
-      <div class="form-group">
-        <div id="recaptcha-container"></div>
-        <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="loginForm.invalid">
-          <span [hidden]="isLoading">Send OTP</span>
-        </button>
-      </div>
-
-      <div class="form-group">
-        <label class="d-block">
-          <input type="text" class="form-control" placeholder="OTP" formControlName="otp">
-          <app-control-messages [control]="f['otp']"></app-control-messages>
-        </label>
-      </div>
-
-      <div class="form-group">
-        <div id="recaptcha-container"></div>
-        <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="loginForm.invalid">
-          <span [hidden]="isLoading">Send OTP</span>
-        </button>
-      </div> -->
-
-      <div class="form-group">
-        <label class="d-block">
-          <input type="text" class="form-control" placeholder="Username" #userName>
-        </label>
-      </div>
-      <div class="form-group">
-        <label class="d-block">
-          <input type="password" name="password" autocomplete="on" class="form-control" placeholder="Password" #userPassword>
-        </label>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block btn-raised" type="button" (click)="authService.signIn(userName.value, userPassword.value)">
-          <span [hidden]="isLoading">Submit</span>
-          <span [hidden]="!isLoading">
-            <fa-icon icon="asterisk" size="3x" [spin]="true"></fa-icon>
-          </span>
-        </button>
-      </div>
-      <a [routerLink]="['/auth/register']">Don't have an account? Sign up here!</a>
-  </form>
-</fieldset>

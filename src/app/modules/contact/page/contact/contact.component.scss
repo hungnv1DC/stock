@@ -1,6 +1,11 @@
 #content {
   margin-top: 1rem;
 }
-.vh-82 {
-  height: 82vh;
+
+.vhm-100 {
+  // height: calc(100% - 85px);
+  min-height: calc(100vh - 150px) !important;
+}
+.vh-100-150 {
+  height: calc(100vh - 150px) !important;
 }

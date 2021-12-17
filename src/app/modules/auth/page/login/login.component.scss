@@ -1,0 +1,51 @@
+.or {
+  text-align: center;
+  display: block;
+  color: #a0a0a0;
+  background: white;
+  position: relative;
+  margin: 5px 0 0px;
+}
+
+.orInner {
+  background: white;
+  display: inline-block;
+  z-index: 4;
+  position: relative;
+  padding: 0 12px;
+}
+
+.or:before {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: 11px;
+  width: 100%;
+  height: 1px;
+  background: #e2e2e2;
+}
+
+.full-width-image {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  height: calc(100vh - 150px) !important;
+}
+
+
+.auth-container {
+
+}
+
+.auth-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 1);
+  color: #333;
+}

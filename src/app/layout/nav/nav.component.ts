@@ -5,6 +5,7 @@ import { ThemeService } from '@core/service/theme.service';
 import { environment } from '@env';
 import { AuthService } from '@app/core/service/auth.service';
 import { User } from '@app/data/schema/user';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-nav',
@@ -18,7 +19,7 @@ export class NavComponent implements OnInit, OnDestroy {
   public isDarkTheme$: Observable<boolean>;
   label: string;
   subscription: Subscription = new Subscription();
-  user: User;
+  user: any;
 
   navItems = [
     { link: '/home', title: 'Home' },
@@ -27,13 +28,14 @@ export class NavComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private themeService: ThemeService,
-    private authService: AuthService) {
-      this.user = this.authService.userValue;
-      console.log('userData', this.authService.userData);
+    public authService: AuthService,
+    public afAuth: AngularFireAuth,) {
+      this.subscription.add(this.afAuth.authState.subscribe(user => {
+        this.user = user;
+      }));
     }
 
   ngOnInit() {
-    console.log(this.user);
     this.isDarkTheme$ = this.themeService.getDarkTheme();
     this.subscription.add(this.isDarkTheme$.subscribe((theme) => {
       this.label = theme ? 'Sáng' : 'Tối';
@@ -45,8 +47,7 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   logout = () => {
-    this.authService.logout();
-    this.user = this.authService.userValue;
+    this.authService.signOut();
 
     console.log(this.authService.userValue);
   };

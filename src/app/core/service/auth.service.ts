@@ -38,11 +38,13 @@ export class AuthService {
   api = {
     login: `${environment.host}/auth/login`
   };
-  private userSubject: BehaviorSubject<User>;
+  private userSubject: BehaviorSubject<any>;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   user: Observable<User>;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   userData: any; // Save logged in user data
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  confirmationResult: auth.ConfirmationResult;
 
   constructor(
     private http: HttpClient,
@@ -51,19 +53,23 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public ngZone: NgZone // NgZone service to remove outside scope warning
     ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-    this.user = this.userSubject.asObservable();
     this.afAuth.authState.subscribe(user => {
       if (user) {
         console.log('user', user);
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
+        this.userSubject.next(this.userData);
+
         JSON.parse(localStorage.getItem('user'));
       } else {
         localStorage.setItem('user', null);
+        this.userSubject.next(null);
+
         JSON.parse(localStorage.getItem('user'));
       }
     });
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+    this.user = this.userSubject.asObservable();
   }
 
   public get userValue(): User {
@@ -74,10 +80,47 @@ export class AuthService {
   async signIn(email: string, password: string) {
     try {
       const result = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      this.userSubject.next(result.user);
+
       this.ngZone.run(() => {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['/home']);
       });
       this.setUserData(result.user);
+    } catch (error) {
+      window.alert(error.message);
+    }
+  }
+
+  // Sign in with phone
+  async signInPhone(phone: string, appVerifier: auth.ApplicationVerifier) {
+    try {
+      const result = await this.afAuth.auth.signInWithPhoneNumber(phone, appVerifier);
+      console.log('result111', result);
+      this.confirmationResult = result;
+
+    } catch (error) {
+      window.alert(error.message);
+    }
+  }
+
+  // Sign in with phone
+  async signInPhoneVerify(code: string) {
+    try {
+
+      this.confirmationResult.confirm(code).then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        // ...
+        this.userSubject.next(user);
+
+        this.ngZone.run(() => {
+          this.router.navigate(['/home']);
+        });
+        this.setUserData(user);
+      }).catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+      });
     } catch (error) {
       window.alert(error.message);
     }
@@ -89,7 +132,6 @@ export class AuthService {
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       /* Call the SendVerificaitonMail() function when new user sign
       up and returns promise */
-      console.log('result', result);
       this.sendVerificationMail();
       this.setUserData(result.user);
     } catch (error) {
@@ -113,7 +155,7 @@ export class AuthService {
     try {
       const result = await this.afAuth.auth.signInWithPopup(provider);
       this.ngZone.run(() => {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['/home']);
       });
       this.setUserData(result.user);
     } catch (error) {
@@ -137,6 +179,16 @@ export class AuthService {
       merge: true
     });
   }
+
+   // Sign out
+  signOut() {
+     return this.afAuth.auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.userSubject.next(null);
+      this.router.navigate(['/home']);
+    });
+  }
+
 
   login(credentials: LoginContextInterface): Observable<User> {
     return this.http
