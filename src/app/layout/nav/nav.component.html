@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <div class="toolbar">
+    <mat-toolbar color="primary">
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <span class="branding spacer center d-none d-sm-inline d-md-none ">
+              StockF
+            </span>
+            <span class="branding spacer d-none d-md-inline ">
+              StockF
+            </span>
+            <span class="d-none d-md-inline ml-5">
+              <button mat-button class="nav-button mx-1" *ngFor="let item of navItems" [routerLink]="item.link"
+                routerLinkActive="active">
+                {{ item.title }}
+              </button>
+
+              <mat-slide-toggle class="ml-3" [checked]="isDarkTheme$ | async" (change)="toggleTheme($event.checked)">
+                {{label}}
+              </mat-slide-toggle>
+            </span>
+          </div>
+          <div *ngIf="user?.username; else notsignin">
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Hi! {{user.username}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="logout()">Đăng xuất</button>
+              </div>
+            </div>
+          </div>
+          <ng-template #notsignin>
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Tài khoản</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a class="nav-item nav-link" ngbDropdownItem routerLink="/auth/login" routerLinkActive="active">Đăng nhập</a>
+                <a class="nav-item nav-link" ngbDropdownItem routerLink="/auth/register" routerLinkActive="active">Đăng ký</a>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <!-- <div style="float: right;">
+          <a [href]="repoUrl" target="_blank">Fork on GitHub
+            <fa-icon [icon]="['fab','github']"></fa-icon>
+          </a>
+        </div> -->
+      </div>
+    </mat-toolbar>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="alert alert-info" role="alert">
+  Username: mor_2314 \\
+  Password: 83r5^_
+</div>
+
+<div [hidden]="!error" class="alert alert-danger">
+  {{ error }}
+</div>
+
+<fieldset [disabled]="isLoading">
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
+      <!-- <div class="form-group">
+        <label class="d-block">
+          <input type="text" class="form-control" placeholder="Điện thoại" formControlName="phoneNumber">
+          <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div id="recaptcha-container"></div>
+        <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="loginForm.invalid">
+          <span [hidden]="isLoading">Send OTP</span>
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label class="d-block">
+          <input type="text" class="form-control" placeholder="OTP" formControlName="otp">
+          <app-control-messages [control]="f['otp']"></app-control-messages>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div id="recaptcha-container"></div>
+        <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="loginForm.invalid">
+          <span [hidden]="isLoading">Send OTP</span>
+        </button>
+      </div> -->
+
+      <div class="form-group">
+        <label class="d-block">
+          <input type="text" class="form-control" placeholder="Username" #userName>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="d-block">
+          <input type="password" name="password" autocomplete="on" class="form-control" placeholder="Password" #userPassword>
+        </label>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block btn-raised" type="button" (click)="authService.signIn(userName.value, userPassword.value)">
+          <span [hidden]="isLoading">Submit</span>
+          <span [hidden]="!isLoading">
+            <fa-icon icon="asterisk" size="3x" [spin]="true"></fa-icon>
+          </span>
+        </button>
+      </div>
+      <a [routerLink]="['/auth/register']">Don't have an account? Sign up here!</a>
+  </form>
+</fieldset>
