@@ -50,14 +50,15 @@
 
                    <div class="form-group">
                       <label class="d-block">
-                        <input type="text" class="form-control" placeholder="Số Điện thoại"  formControlName="phoneNumber">
-                        <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
+                        <input type="text" class="form-control" placeholder="Số Điện thoại"  formControlName="phone">
+                        <app-control-messages [control]="f['phone']"></app-control-messages>
+                        {{ f['phone']?.errors | json}}
                       </label>
                     </div>
 
                     <div class="form-group">
                       <div id="recaptcha-container"></div>
-                      <button type="submit" class="btn btn-primary btn-block btn-raised" type="button" [disabled]="loginForm.invalid" (click)="loginInPhone(phoneNumber.value)" >
+                      <button type="submit" class="btn btn-primary btn-block btn-raised" type="button" [disabled]="loginForm.invalid"  >
                         <span [hidden]="isLoading">Tiếp theo</span>
                       </button>
                     </div>

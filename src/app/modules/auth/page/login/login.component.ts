@@ -19,13 +19,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading: boolean;
   loginForm: FormGroup;
 
-  email: string;
-  password: string;
-  signInMode = false;
-  phoneNumber: string;
-  otp: string;
-  phoneSignIn = false;
-
   private sub = new Subscription();
   // eslint-disable-next-line @typescript-eslint/member-ordering
   recaptchaVerifier: firebase.auth.RecaptchaVerifier;
@@ -59,6 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get f() {
+    console.log(this.loginForm.controls);
     return this.loginForm.controls;
   }
 
@@ -86,8 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private buildForm(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      phone: ['', [Validators.required, Validators.pattern('/bob/i')]]
     });
   }
 
