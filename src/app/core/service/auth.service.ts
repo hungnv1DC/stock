@@ -95,8 +95,9 @@ export class AuthService {
   async signInPhone(phone: string, appVerifier: auth.ApplicationVerifier) {
     try {
       const result = await this.afAuth.auth.signInWithPhoneNumber(phone, appVerifier);
-      console.log('result111', result);
       this.confirmationResult = result;
+
+      return this.confirmationResult;
 
     } catch (error) {
       window.alert(error.message);
@@ -108,6 +109,7 @@ export class AuthService {
     try {
 
       this.confirmationResult.confirm(code).then((result) => {
+        console.log('result', result);
         // User signed in successfully.
         const user = result.user;
         // ...
@@ -118,6 +120,7 @@ export class AuthService {
         });
         this.setUserData(user);
       }).catch((error) => {
+        window.alert(error.message);
         // User couldn't sign in (bad verification code?)
         // ...
       });

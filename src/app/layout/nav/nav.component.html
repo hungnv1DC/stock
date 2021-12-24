@@ -24,9 +24,12 @@
           <div *ngIf="user?.uid; else notsignin">
             <div ngbDropdown class="d-inline-block">
               <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Hi! {{(user.displayName) ? user.displayName : 'User'}}</button>
+
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a class="nav-item nav-link" routerLink="/auth/profile">Cập nhật tài khoản</a>
                 <button ngbDropdownItem (click)="logout()">Đăng xuất</button>
               </div>
+
             </div>
           </div>
           <ng-template #notsignin>

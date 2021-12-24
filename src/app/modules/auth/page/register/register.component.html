@@ -1,20 +1,48 @@
 
+<div class="container">
+  <div class="authBlock py-5">
+    <div
+    class="drop-container"
+    ngFileDrop
+    [options]="options"
+    (uploadOutput)="onUploadOutput($event)"
+    [uploadInput]="uploadInput"
+    [ngClass]="{ 'is-drop-over': dragOver }"
+  >
+    <h1>Drag &amp; Drop</h1>
+  </div>
 
-<div class="authBlock">
-  <div class="form-group">
-    <label class="d-block">
-      <input type="text" class="form-control" [placeholder]="'Username'" #username>
-    </label>
+  <label class="upload-button">
+    <input
+      type="file"
+      ngFileSelect
+      [options]="options"
+      (uploadOutput)="onUploadOutput($event)"
+      [uploadInput]="uploadInput"
+
+    />
+    or choose file(s)
+  </label>
+
+  <button type="button" class="start-upload-btn" (click)="startUpload()">
+    Start Upload
+  </button>
+
+    <div class="form-group">
+      <label class="d-block">
+        <input type="text" class="form-control" [placeholder]="'Họ và tên'" #username>
+      </label>
+    </div>
+    <!-- <div class="form-group">
+      <label class="d-block">
+        <input type="text" class="form-control" [placeholder]="'Password'"  #password>
+      </label>
+    </div> -->
+    <div class="form-group">
+      <button class="btn btn-primary btn-block btn-raised" type="button" >
+        <span>Cập nhật</span>
+      </button>
+    </div>
   </div>
-  <div class="form-group">
-    <label class="d-block">
-      <input type="text" class="form-control" [placeholder]="'Password'"  #password>
-    </label>
-  </div>
-  <div class="form-group">
-    <button class="btn btn-primary btn-block btn-raised" type="button" (click)="authService.signUp(username.value, password.value)">
-      <span>Sign Up</span>
-    </button>
-  </div>
-  <a [routerLink]="['/auth/login']">Got an account already? Log in here!</a>
+
 </div>

@@ -7,9 +7,10 @@ import { SharedModule } from '@shared/shared.module';
 import { AuthRoutingModule } from './auth.routing';
 import { VerifyEmailComponent } from './page/verify-email/verify-email.component';
 import { NgxOtpInputModule } from 'ngx-otp-input';
+import { NgxUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, VerifyEmailComponent],
-  imports: [AuthRoutingModule, SharedModule, NgxOtpInputModule]
+  imports: [AuthRoutingModule, SharedModule, NgxOtpInputModule, NgxUploaderModule ]
 })
 export class AuthModule {}

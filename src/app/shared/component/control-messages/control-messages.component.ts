@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ValidationService } from '../../service/validation.service';
@@ -12,10 +13,11 @@ export class ControlMessagesComponent {
   @Input() labelName?: string;
 
   get errorMessage(): boolean {
+
     for (const propertyName in this.control.errors) {
       if (
         this.control.errors.hasOwnProperty(propertyName) &&
-        this.control.touched
+        this.control.value
       ) {
         return ValidationService.getValidationErrorMessage(
           propertyName,

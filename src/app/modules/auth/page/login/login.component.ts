@@ -9,6 +9,8 @@ import { AuthService } from '@core/service/auth.service';
 import * as firebase from 'firebase';
 import { DOCUMENT } from '@angular/common';
 import { NgxOtpInputConfig } from 'ngx-otp-input';
+import { AppConstant } from '@app/shared/common/app-constant';
+import { auth } from 'firebase/app';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -36,6 +38,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
       inputError: 'my-super-error-class'
     }
   };
+  confirmationResult: auth.ConfirmationResult;
+  isDisableVerify = true;
+  otpCode: string;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -52,7 +57,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get f() {
-    console.log(this.loginForm.controls);
     return this.loginForm.controls;
   }
 
@@ -78,15 +82,28 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sub.unsubscribe();
   }
 
+  onChangeEvent(event: any){
+
+    console.log(event.target.value);
+
+  }
+
   private buildForm(): void {
     this.loginForm = this.formBuilder.group({
-      phone: ['', [Validators.required, Validators.pattern('/bob/i')]]
+      phone: ['', [Validators.required, Validators.pattern(AppConstant.pattern.phoneNumberVietNamese)]]
     });
   }
 
-  loginInPhone(phone: string) {
-    this.authService.signInPhone(phone, this.recaptchaVerifier);
-
+  async loginInPhone() {
+    let phone  = this.f['phone'].value;
+    if (phone) {
+      while(phone.charAt(0) === '0') {
+        phone = '+84' + phone.substring(1);
+      }
+      const result = await this.authService.signInPhone(phone, this.recaptchaVerifier);
+      this.confirmationResult = result;
+      console.log(result);
+    }
   }
 
   handeOtpChange(value: string[]): void {
@@ -96,7 +113,14 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   handleFillEvent(value: string): void {
     console.log('22',value);
     if (value) {
-      this.authService.signInPhoneVerify(value);
+      this.isDisableVerify = false;
+      this.otpCode = value;
+    }
+  }
+
+  signInPhoneVerify() {
+    if (this.otpCode) {
+      this.authService.signInPhoneVerify(this.otpCode);
     }
   }
 
