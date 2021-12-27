@@ -42,7 +42,8 @@
               {
                 "input": "src/styles.scss",
                 "inject": true
-              }
+              },
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

@@ -19,6 +19,11 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthService } from './core/service/auth.service';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ToastrModule } from 'ngx-toastr';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Interceptors } from './core/interceptor';
+import { CustomHttpClient } from './core/http/http-client.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,8 @@ import { AuthService } from './core/service/auth.service';
     AuthLayoutComponent,
   ],
   imports: [
+    CoreModule,
+
     // angular
     BrowserModule,
 
@@ -36,7 +43,6 @@ import { AuthService } from './core/service/auth.service';
     // AuthModule,
 
     // core & shared
-    CoreModule,
     SharedModule,
 
     // app
@@ -46,8 +52,14 @@ import { AuthService } from './core/service/auth.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    NgxSpinnerModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    Interceptors,
+    CustomHttpClient,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

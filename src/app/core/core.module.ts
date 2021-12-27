@@ -7,10 +7,12 @@ import { throwIfAlreadyLoaded } from './guard/module-import.guard';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
+import { Interceptors } from './interceptor';
 
 @NgModule({
   imports: [HttpClientModule],
   providers: [
+    Interceptors,
     AuthGuard,
     NoAuthGuard,
     {
