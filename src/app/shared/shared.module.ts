@@ -46,7 +46,7 @@ import { SpinnerComponent } from './component/spinner/spinner.component';
     RouterModule,
 
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   declarations: [ControlMessagesComponent, SpinnerComponent],
   exports: [
@@ -61,7 +61,7 @@ import { SpinnerComponent } from './component/spinner/spinner.component';
     FontAwesomeModule,
 
     ControlMessagesComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ]
 })
 export class SharedModule {

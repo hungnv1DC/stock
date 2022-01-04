@@ -14,28 +14,27 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th scope="col">#</th>
+        <!-- <th scope="col">#</th> -->
         <th scope="col">Mã cổ phiếu</th>
         <th scope="col">Giá (vnd)</th>
-        <th scope="col">Tên Công ty</th>
-        <th scope="col">Vốn hóa</th>
+        <th scope="col">VOL</th>
+        <!-- <th scope="col">Vốn hóa</th>
         <th scope="col">EPS</th>
-        <th scope="col">Vote</th>
+        <th scope="col">Vote</th> -->
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let country of countries">
-        <th scope="row">{{ country.id }}</th>
+      <tr *ngFor="let stock of stocks">
+        <!-- <th scope="row">{{ country.id }}</th> -->
         <td>
-          <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-          {{ country.name }}
+          {{ stock.symbol }}
         </td>
-        <td>{{ country.area | number}}</td>
-        <td>{{ country.population | number }}</td>
-        <td>{{ country.population | number }}</td>
+        <td>{{ stock.priceClose | number}}</td>
+        <td>{{ stock.dealVolume | number }}</td>
+        <!-- <td>{{ country.population | number }}</td>
 
         <td>{{ country.population | number }}</td>
-        <td>{{ country.population | number }}</td>
+        <td>{{ country.population | number }}</td> -->
 
       </tr>
       </tbody>

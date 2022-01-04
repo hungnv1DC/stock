@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProjectService } from '@data/service/project.service';
@@ -7,7 +7,8 @@ import { Project } from '@data/schema/project';
 import { MyModalComponent } from '../modal/my-modal.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { takeUntil } from 'rxjs/operators';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 interface Country {
   id?: number;
   name: string;
@@ -110,42 +111,73 @@ export class HomeComponent implements OnInit {
   pageSize = 4;
   collectionSize = COUNTRIES.length;
   countries: Country[];
+  stocks: any[] = [];
 
   constructor(
     private modalService: NgbModal,
     private projectService: ProjectService,
     private spinnerService: NgxSpinnerService,
     private _toastrService: ToastrService,
-
+    private datePipe: DatePipe
   ) {
     this.refreshCountries();
     this._toastrService.error('ádd');
-    // this.projects$.subscribe(data => {
-    //   // console.log(data);
-    // });
-
   }
 
   onCheckStock() {
-    const _brands = this.catchErrorDrop(this._uskuManagementService.getBrands(), CONSTANTS.CANNOT_LOAD_BRAND);
-    const _categories = this.catchErrorDrop(this._uskuManagementService.getCategories(), CONSTANTS.CANNOT_LOAD_CATEGORY);
-    const _manufacturers = this.catchErrorDrop(this._uskuManagementService.getManufacturers(), CONSTANTS.CANNOT_LOAD_MANUFACTURERS);
-    forkJoin([_brands, _categories, _manufacturers]).pipe(
-      takeUntil(this._unsubscribeAll)
-    ).subscribe(results => {
-      const [brands, categories, manufacturers]: any = results;
+    this.symbols$.subscribe(symbols => {
+      if (symbols?.length) {
+        symbols.forEach(e => {
+          this.projectService.getHistorical(e.symbol).subscribe(data => {
+            if (data?.length && data[0].dealVolume > 560000) {
+              data.forEach((d, index) => {
+                if (index < data.length - 1) {
+                  d.change = (d.priceClose / d.adjRatio) - (data[index + 1].priceClose / data[index + 1].adjRatio);
+                  if (d.change >= 0) {
+                    d.up = d.change;
+                    d.down = 0;
+                  } else {
+                    d.up = 0;
+                    d.down = (d.change) * (-1);
+                  }
+                }
+                return d;
+              });
+              
+              let upt = 0;
+              let downt = 0;
+              data.forEach((f, index) => {
+                if (index < data.length - 1 &&  f.up >= 0) {
+                  upt += f.up;
+                }
+                if (index < data.length - 1 &&  f.down >= 0) {
+                  downt += f.down;
+                }
+              });
+              console.log(`${data[0].symbol}`, data)
 
+              const avgu = upt/(data.length - 1);
+              const avgd = downt/(data.length - 1);
+
+              let rs;
+              let rsi;
+              if (avgu && avgd) {
+                rs = avgu/avgd;
+                rsi = 100 - 100/(1 + rs);
+              } else {
+                rsi = 0;
+              }
+
+              if (rsi <= 40) {
+                this.stocks.push(data[0]);
+              }
+              console.log(`${data[0].symbol}`, rsi);
+            }
+          })
+        });
+      }
     });
-  }
 
-  catchErrorDrop(url, message) {
-    return url.pipe(
-      takeUntil(this._unsubscribeAll),
-      catchError(err => {
-        this._toastrService.error(message);
-        return of([]);
-      })
-    );
   }
 
   ngOnInit() {

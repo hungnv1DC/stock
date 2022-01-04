@@ -33,8 +33,6 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('request', request);
-    console.log('next', next);
 
     this.totalRequest++;
     this.spinnerService.show();

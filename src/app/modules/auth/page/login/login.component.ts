@@ -107,11 +107,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handeOtpChange(value: string[]): void {
-    console.log('11',value);
   }
 
   handleFillEvent(value: string): void {
-    console.log('22',value);
     if (value) {
       this.isDisableVerify = false;
       this.otpCode = value;

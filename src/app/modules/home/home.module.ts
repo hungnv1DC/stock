@@ -9,6 +9,7 @@ import { ProjectDetailsComponent } from './page/project-details/project-details.
 
 import { HomeRoutingModule } from './home.routing';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   exports: [],
-  providers: [],
+  providers: [DatePipe],
   entryComponents: [MyModalComponent]
 })
 export class HomeModule {}

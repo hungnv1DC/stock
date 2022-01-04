@@ -21,15 +21,28 @@ export class ProjectService {
   }
 
   public getSymbols(): Observable<any> {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const headers = new HttpHeaders({Authorization: environment.fireantToken});
+    const headers = new HttpHeaders({ Authorization: environment.fireantToken });
 
    return this._http.Get<any>('https://api.fireant.vn/symbols/search?keywords&limit=5000&type=stock', '', {headers});
   }
 
-  public getList(): Observable<any> {
+  public getHistorical(symbol?: string): Observable<any> {
     // eslint-disable-next-line max-len
-    return this._http.Get<any>('https://api.fireant.vn/symbols/STB/historical-quotes?startDate=2021-12-20T08:27:25Z&endDate=2021-12-31T08:27:25Z', '', {authorization: 'fireant'});
+    const headers = new HttpHeaders({ Authorization: environment.fireantToken});
+    const endDate = new Date();
+    endDate.setUTCHours(8);
+    endDate.setUTCMinutes(0);
+    endDate.setUTCSeconds(0);
+    endDate.setUTCMilliseconds(0);
+    const startDate = new Date(); 
+    startDate.setDate(endDate.getDate() - 21);
+    startDate.setUTCHours(2);
+    startDate.setUTCMinutes(0);
+    startDate.setUTCSeconds(0);
+    startDate.setUTCMilliseconds(0);
+    
+
+    return this._http.Get<any>(`https://api.fireant.vn/symbols/${symbol}/historical-quotes?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`, '', {headers});
     // return this._http.Get<any>('http://6fa2-183-91-5-102.ngrok.io/test', '');
   }
 

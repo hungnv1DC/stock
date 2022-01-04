@@ -55,7 +55,6 @@ export class AuthService {
     ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        console.log('user', user);
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         this.userSubject.next(this.userData);
@@ -109,7 +108,6 @@ export class AuthService {
     try {
 
       this.confirmationResult.confirm(code).then((result) => {
-        console.log('result', result);
         // User signed in successfully.
         const user = result.user;
         // ...
