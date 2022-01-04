@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin, Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProjectService } from '@data/service/project.service';
 import { Project } from '@data/schema/project';
 import { MyModalComponent } from '../modal/my-modal.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+import { takeUntil } from 'rxjs/operators';
 interface Country {
   id?: number;
   name: string;
@@ -99,8 +102,10 @@ const COUNTRIES: Country[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  projects$: Observable<Project[]> = this.projectService.getList();
+export class HomeComponent implements OnInit {
+  projects$: Observable<Project[]> = this.projectService.getSymbols();
+  symbols$: Observable<any[]> = this.projectService.getSymbols();
+
   page = 1;
   pageSize = 4;
   collectionSize = COUNTRIES.length;
@@ -108,15 +113,49 @@ export class HomeComponent {
 
   constructor(
     private modalService: NgbModal,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private spinnerService: NgxSpinnerService,
+    private _toastrService: ToastrService,
+
   ) {
-    // this.refreshCountries();
+    this.refreshCountries();
+    this._toastrService.error('ádd');
+    // this.projects$.subscribe(data => {
+    //   // console.log(data);
+    // });
 
-    this.projects$.subscribe(data => {
-      console.log(data);
+  }
+
+  onCheckStock() {
+    const _brands = this.catchErrorDrop(this._uskuManagementService.getBrands(), CONSTANTS.CANNOT_LOAD_BRAND);
+    const _categories = this.catchErrorDrop(this._uskuManagementService.getCategories(), CONSTANTS.CANNOT_LOAD_CATEGORY);
+    const _manufacturers = this.catchErrorDrop(this._uskuManagementService.getManufacturers(), CONSTANTS.CANNOT_LOAD_MANUFACTURERS);
+    forkJoin([_brands, _categories, _manufacturers]).pipe(
+      takeUntil(this._unsubscribeAll)
+    ).subscribe(results => {
+      const [brands, categories, manufacturers]: any = results;
+
     });
+  }
 
+  catchErrorDrop(url, message) {
+    return url.pipe(
+      takeUntil(this._unsubscribeAll),
+      catchError(err => {
+        this._toastrService.error(message);
+        return of([]);
+      })
+    );
+  }
 
+  ngOnInit() {
+    /** spinner starts on init */
+    // this.spinnerService.show();
+
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //   this.spinnerService.hide();
+    // }, 5000);
   }
   refreshCountries() {
     this.countries = COUNTRIES

@@ -24,6 +24,7 @@ export interface IRequestOptions {
   responseType?: 'json';
   withCredentials?: boolean;
   body?: any;
+  authorization?: string;
 }
 
 @Injectable()
@@ -40,6 +41,7 @@ export class CustomHttpClient implements OnDestroy {
     if (options && options.params) {
       options.params = new HttpParams({ encoder: new CustomEncoder(), fromObject: { ...options.params } });
     }
+    console.log('options', options);
     return this.intercept<T>(this.http.get<T>(domainType + endPoint, options));
   }
 

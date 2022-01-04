@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
@@ -19,7 +19,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthService } from './core/service/auth.service';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptors } from './core/interceptor';
@@ -55,6 +55,7 @@ import { CustomHttpClient } from './core/http/http-client.service';
     NgxSpinnerModule,
     ToastrModule.forRoot(),
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     AuthService,
     Interceptors,

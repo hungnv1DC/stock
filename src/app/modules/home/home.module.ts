@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { SharedModule } from '@shared/shared.module';
 
@@ -8,6 +8,7 @@ import { ProjectItemComponent } from './page/project-item/project-item.component
 import { ProjectDetailsComponent } from './page/project-details/project-details.component';
 
 import { HomeRoutingModule } from './home.routing';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { HomeRoutingModule } from './home.routing';
     ProjectItemComponent,
     ProjectDetailsComponent
   ],
-  imports: [SharedModule, NgxMasonryModule, HomeRoutingModule],
+  imports: [SharedModule, NgxMasonryModule, HomeRoutingModule, NgxSpinnerModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
   exports: [],
   providers: [],
   entryComponents: [MyModalComponent]
