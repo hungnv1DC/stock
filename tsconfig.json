@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "module": "esnext",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./public/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
