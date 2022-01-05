@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -118,7 +118,8 @@ export class HomeComponent implements OnInit {
     private projectService: ProjectService,
     private spinnerService: NgxSpinnerService,
     private _toastrService: ToastrService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private ref: ChangeDetectorRef
   ) {
     this.refreshCountries();
     this._toastrService.error('ádd');
@@ -143,7 +144,6 @@ export class HomeComponent implements OnInit {
                 }
                 return d;
               });
-              
               let upt = 0;
               let downt = 0;
               data.forEach((f, index) => {
@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
                   downt += f.down;
                 }
               });
-              console.log(`${data[0].symbol}`, data)
+              console.log(`${data[0].symbol}`, data);
 
               const avgu = upt/(data.length - 1);
               const avgd = downt/(data.length - 1);
@@ -170,10 +170,11 @@ export class HomeComponent implements OnInit {
 
               if (rsi <= 40) {
                 this.stocks.push(data[0]);
+                this.ref.markForCheck();
               }
               console.log(`${data[0].symbol}`, rsi);
             }
-          })
+          });
         });
       }
     });
