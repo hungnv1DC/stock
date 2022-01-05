@@ -27,18 +27,18 @@ export class ProjectService {
    return this._http.Get<any>('https://api.fireant.vn/symbols/search?keywords&limit=5000&type=stock', '', {headers});
   }
 
-  public getHistorical(symbol?: string): Observable<any> {
+  public getHistorical(symbol?: string, day?: number): Observable<any> {
     // eslint-disable-next-line max-len
     const headers = new HttpHeaders({ Authorization: environment.fireantToken});
     const endDate = new Date();
-    endDate.setDate(endDate.getDate() - 1);
+    // endDate.setDate(endDate.getDate());
 
     endDate.setUTCHours(8);
     endDate.setUTCMinutes(0);
     endDate.setUTCSeconds(0);
     endDate.setUTCMilliseconds(0);
     const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 22);
+    startDate.setDate(endDate.getDate() - day);
     startDate.setUTCHours(2);
     startDate.setUTCMinutes(0);
     startDate.setUTCSeconds(0);
@@ -47,6 +47,11 @@ export class ProjectService {
     // eslint-disable-next-line max-len
     return this._http.Get<any>(`https://api.fireant.vn/symbols/${symbol}/historical-quotes?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`, '', {headers});
     // return this._http.Get<any>('http://6fa2-183-91-5-102.ngrok.io/test', '');
+  }
+
+  getTopSymbols(): Observable<any> {
+    const headers = new HttpHeaders({ Authorization: environment.fireantToken });
+    return this._http.Get<any>(`${environment.host}/t/top`, '',);
   }
 
   getSingle(id: number): Observable<Project> {

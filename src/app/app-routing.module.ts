@@ -25,12 +25,17 @@ const routes: Routes = [
         path: 'about',
         loadChildren: () =>
           import('@modules/about/about.module').then(m => m.AboutModule),
-        canActivate: [AuthGuard],
+        canActivate: [NoAuthGuard],
       },
       {
         path: 'contact',
         loadChildren: () =>
           import('@modules/contact/contact.module').then(m => m.ContactModule)
+      },
+      {
+        path: 'tool',
+        loadChildren: () =>
+          import('@modules/tool/tool.module').then(m => m.ToolModule)
       }
     ]
   },

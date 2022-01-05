@@ -10,7 +10,6 @@ $custom-typography: mat.define-typography-config(
 @import './styles/styles-variables';
 @import './styles/style-reset';
 @import './styles/styles-reset.scss-theme';
-
 @include mat.core();
 
 @import './themes/black-theme.scss';
@@ -31,4 +30,8 @@ $custom-typography: mat.define-typography-config(
 .afs-dark-theme {
   @include mat.all-component-themes($afs-black-theme);
   @include custom-components-theme($afs-black-theme);
+}
+section.has-divider .container {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }

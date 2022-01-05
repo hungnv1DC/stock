@@ -14,7 +14,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class NavComponent implements OnInit, OnDestroy {
   public version = environment.version;
-  public repoUrl = 'https://github.com/mathisGarberg/angular-folder-structure';
 
   public isDarkTheme$: Observable<boolean>;
   label: string;
@@ -24,7 +23,8 @@ export class NavComponent implements OnInit, OnDestroy {
   navItems = [
     { link: '/home', title: 'Home' },
     { link: '/about', title: 'Stock Rating' },
-    { link: '/contact', title: 'Biểu đồ' }
+    { link: '/contact', title: 'Biểu đồ' },
+    { link: '/tool', title: 'Tool' }
   ];
 
   constructor(private themeService: ThemeService,
@@ -36,6 +36,7 @@ export class NavComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
+    this.themeService.setDarkTheme(true);
     this.isDarkTheme$ = this.themeService.getDarkTheme();
     this.subscription.add(this.isDarkTheme$.subscribe((theme) => {
       this.label = theme ? 'Sáng' : 'Tối';
