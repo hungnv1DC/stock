@@ -160,7 +160,7 @@ export class ToolComponent extends DestroyComponent implements OnInit {
             rsi = 0;
           }
           data[0].rsi = rsi;
-          if (data[0].dealVolume > avgvol && data[0].change > 0.5 && data[1].change < 0.5) {
+          if (data[0].dealVolume > avgvol && data[0].change > 0.5 && data[1].change < 0.2) {
             this.volstocks.push(data[0]);
             this.ref.markForCheck();
           }
