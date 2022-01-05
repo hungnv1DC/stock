@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
             <li [ngbNavItem]="1">
-              <a ngbNavLink>Tool 1</a>
+              <a ngbNavLink (click)="onGetListRsi()">rsi</a>
               <ng-template ngbNavContent>
                 <table class="table table-striped">
                   <thead>
@@ -55,28 +55,103 @@
               </ng-template>
             </li>
             <li [ngbNavItem]="2">
-              <a ngbNavLink>Tool 2</a>
+              <a ngbNavLink (click)="getListVolUp()">Vol > tb 20p</a>
               <ng-template ngbNavContent>
-                <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
-                  farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
-                  ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                  helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson
-                  8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-                  stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Mã</th>
+                      <th scope="col">Giá</th>
+                      <th scope="col">RSI</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let st of volstocks; let i = index">
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{st.symbol}}</td>
+                      <td>
+                        <ng-container *ngIf="st.change > 0">
+                          <div class="up">
+                            <span class="icon_up sprite"></span>
+                            {{ st.priceClose | number}}
+                            ({{ st.change | number}})
+                          </div>
+
+                        </ng-container>
+                        <ng-container *ngIf="st.change < 0">
+                          <div class="down">
+                            <span class="icon_down sprite"></span>
+                            {{ st.priceClose | number}}
+                            ({{ st.change | number}})
+                          </div>
+
+                        </ng-container>
+                        <ng-container *ngIf="st.change === 0">
+                          <div class="normal">
+                            <span class="icon_down sprite"></span>
+                            {{ st.priceClose | number}}
+                            ({{ st.change | number}})
+                          </div>
+
+                        </ng-container>
+
+                      </td>
+                      <td>{{st.rsi}}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </ng-template>
             </li>
-            <!-- <li [ngbNavItem]="3">
-              <a ngbNavLink>Three</a>
+            <li [ngbNavItem]="3">
+              <a ngbNavLink (click)="getListThrePrice()">Giảm 3 phiên </a>
               <ng-template ngbNavContent>
-                <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
-                  Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
-                  Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
-                  egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
-                  tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-                  magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-                  neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Mã</th>
+                      <th scope="col">Giá</th>
+                      <th scope="col">RSI</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let st of threredstocks; let i = index">
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{st.symbol}}</td>
+                      <td>
+                        <ng-container *ngIf="st.change > 0">
+                          <div class="up">
+                            <span class="icon_up sprite"></span>
+                            {{ st.priceClose | number}}
+                            ({{ st.change | number}})
+                          </div>
+
+                        </ng-container>
+                        <ng-container *ngIf="st.change < 0">
+                          <div class="down">
+                            <span class="icon_down sprite"></span>
+                            {{ st.priceClose | number}}
+                            ({{ st.change | number}})
+                          </div>
+
+                        </ng-container>
+                        <ng-container *ngIf="st.change === 0">
+                          <div class="normal">
+                            <span class="icon_down sprite"></span>
+                            {{ st.priceClose | number}}
+                            ({{ st.change | number}})
+                          </div>
+
+                        </ng-container>
+
+                      </td>
+                      <td>{{st.rsi}}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </ng-template>
-            </li> -->
+            </li>
           </ul>
 
           <div [ngbNavOutlet]="nav" class="mt-2"></div>
