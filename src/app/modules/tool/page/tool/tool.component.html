@@ -15,6 +15,8 @@
                       <th scope="col">Mã</th>
                       <th scope="col">Giá</th>
                       <th scope="col">RSI</th>
+                      <th scope="col">Vol hiện tại</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -49,6 +51,8 @@
 
                       </td>
                       <td>{{st.rsi}}</td>
+                      <td>{{st.dealVolume | number}}</td>
+
                     </tr>
                   </tbody>
                 </table>
@@ -63,7 +67,9 @@
                       <th scope="col">#</th>
                       <th scope="col">Mã</th>
                       <th scope="col">Giá</th>
-                      <th scope="col">RSI</th>
+                      <th scope="col">Vol tb</th>
+
+                      <th scope="col">Vol hiện tại</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -97,7 +103,9 @@
                         </ng-container>
 
                       </td>
-                      <td>{{st.rsi}}</td>
+                      <td>{{st.avgvol | number}}</td>
+                      <td>{{st.dealVolume | number}}</td>
+
                     </tr>
                   </tbody>
                 </table>
@@ -113,6 +121,8 @@
                       <th scope="col">Mã</th>
                       <th scope="col">Giá</th>
                       <th scope="col">RSI</th>
+                      <th scope="col">Vol hiện tại</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -147,6 +157,8 @@
 
                       </td>
                       <td>{{st.rsi}}</td>
+                      <td>{{st.dealVolume | number}}</td>
+
                     </tr>
                   </tbody>
                 </table>

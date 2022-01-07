@@ -160,24 +160,25 @@ export class ToolComponent extends DestroyComponent implements OnInit {
             rsi = 0;
           }
           data[0].rsi = rsi;
-          if (data[0].dealVolume > avgvol && data[0].change > 0.5 && data[1].change < 0.2) {
+          data[0].avgvol = avgvol;
+          if (data[0].dealVolume > avgvol && data[0].change > 0.4 && data[1].change < 0.2) {
             this.volstocks.push(data[0]);
             this.ref.markForCheck();
           }
-         
+
 
           // if (data[0].change < 0 && data[1].change < 0 && data[2].change < 0) {
           //   this.volstocks.push(data[0]);
           //   this.ref.markForCheck();
           // }
-         
+
           // console.log(`${data[0].symbol}`, rsi);
         }
       });
     });
   }
 
-  
+
   getListThrePrice() {
     this.threredstocks = [];
     this.symbols.forEach(symbol => {
@@ -230,13 +231,13 @@ export class ToolComponent extends DestroyComponent implements OnInit {
           //   this.volstocks.push(data[0]);
           //   this.ref.markForCheck();
           // }
-         
+
 
           if (data[0].change < 0 && data[1].change < 0 && data[2].change < 0) {
             this.threredstocks.push(data[0]);
             this.ref.markForCheck();
           }
-         
+
           // console.log(`${data[0].symbol}`, rsi);
         }
       });
