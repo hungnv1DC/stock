@@ -65,6 +65,7 @@
     "masonry-layout": "^4.2.2",
     "ngx-masonry": "^12.0.0",
     "ngx-otp-input": "^0.9.1",
+    "ngx-quill": "^14.0.0",
     "ngx-spinner": "^12.0.0",
     "ngx-toastr": "^14.2.1",
     "ngx-uploader": "^11.0.0",

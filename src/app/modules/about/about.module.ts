@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
+import { QuillModule } from 'ngx-quill';
 
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './page/about/about.component';
 
 @NgModule({
   declarations: [AboutComponent],
-  imports: [AboutRoutingModule, SharedModule]
+  imports: [AboutRoutingModule, SharedModule, QuillModule.forRoot()
+  ]
 })
 export class AboutModule {}

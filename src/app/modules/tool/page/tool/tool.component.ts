@@ -161,7 +161,8 @@ export class ToolComponent extends DestroyComponent implements OnInit {
           }
           data[0].rsi = rsi;
           data[0].avgvol = avgvol;
-          if (data[0].dealVolume > avgvol && data[0].change > 0.4 && data[1].change < 0.2) {
+          // eslint-disable-next-line max-len
+          if (data[0].dealVolume > avgvol && data[0].change > 0.4 && data[1].change < 0.2 && data[0].dealVolume > (data[1].dealVolume * 1.5)) {
             this.volstocks.push(data[0]);
             this.ref.markForCheck();
           }

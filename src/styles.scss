@@ -1,36 +1,39 @@
-@use '~@angular/material' as mat;
+// @use '~@angular/material' as mat;
 @import '~bootstrap/scss/bootstrap';
+@import '~quill/dist/quill.core.css';
+ @import '~quill/dist/quill.bubble.css';
+ @import '~quill/dist/quill.snow.css';
 
-@import '~@angular/material/theming';
+// @import '~@angular/material/theming';
 
-$custom-typography: mat.define-typography-config(
-  $font-family: 'Open-sans, Arial, sans-serif'
-);
+// $custom-typography: mat.define-typography-config(
+//   $font-family: 'Open-sans, Arial, sans-serif'
+// );
 
 @import './styles/styles-variables';
 @import './styles/style-reset';
 @import './styles/styles-reset.scss-theme';
-@include mat.core();
+// @include mat.core();
 
-@import './themes/black-theme.scss';
-@import './themes/light-theme.scss';
+// @import './themes/black-theme.scss';
+// @import './themes/light-theme.scss';
 
 @import 'app/modules/home/page/project-item/project-container.component.scss-theme.scss';
 
-@mixin custom-components-theme($theme) {
-  @include my-styles-reset-theme($theme);
-  @include my-project-container-component-theme($theme);
-}
+// @mixin custom-components-theme($theme) {
+//   @include my-styles-reset-theme($theme);
+//   @include my-project-container-component-theme($theme);
+// }
 
-.afs-light-theme {
-  @include mat.all-component-themes($afs-light-theme);
-  @include custom-components-theme($afs-light-theme);
-}
+// .afs-light-theme {
+//   @include mat.all-component-themes($afs-light-theme);
+//   @include custom-components-theme($afs-light-theme);
+// }
 
-.afs-dark-theme {
-  @include mat.all-component-themes($afs-black-theme);
-  @include custom-components-theme($afs-black-theme);
-}
+// .afs-dark-theme {
+//   @include mat.all-component-themes($afs-black-theme);
+//   @include custom-components-theme($afs-black-theme);
+// }
 section.has-divider .container {
   padding-top: 6rem;
   padding-bottom: 6rem;
