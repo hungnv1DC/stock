@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProjectService } from '@app/data/service/project.service';
 import { checkNullParams } from '@app/shared/common/utils';
 import { BaseComponent } from '@app/shared/component/base-component/base.component';
@@ -9,13 +10,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, finalize, map, startWith, takeUntil } from 'rxjs/operators';
+import { DialogBrokerComponent } from '../../modal/dialog-broker/dialog-broker.component';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  selector: 'app-broker',
+  templateUrl: './broker.component.html',
+  styleUrls: ['./broker.component.scss']
 })
-export class AboutComponent extends BaseComponent implements OnInit {
+export class BrokerComponent extends BaseComponent implements OnInit {
   // topSymbols$: Observable<any[]> = this.projectService.getTopSymbols();
   // myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
@@ -44,17 +46,20 @@ export class AboutComponent extends BaseComponent implements OnInit {
       required: 'is required',
     },
   };
+  public showFormDialogRef: MatDialogRef<DialogBrokerComponent>;
 
   constructor(
     private modalService: NgbModal,
     private projectService: ProjectService,
     private spinnerService: NgxSpinnerService,
     private _toastrService: ToastrService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private _dialog: MatDialog
+
   ) {
     super();
 
-    this.projectService.getTopSymbols().subscribe(data => {
+    this.projectService.getTopBrokerQuestion().subscribe(data => {
       if (data) {
         data.forEach(element => {
           element.isCollapsed = true;
@@ -68,7 +73,7 @@ export class AboutComponent extends BaseComponent implements OnInit {
     super.ngOnInit();
     this.frm.reset();
     const { code } = this.frm.controls;
-console.log( this.frm.controls);
+    console.log( this.frm.controls);
     this.filteredOptions = code.valueChanges.pipe(
       startWith(''),
       map(value => this.filter(value)),
@@ -104,7 +109,7 @@ console.log( this.frm.controls);
 
   save(): void {
     const frmValue = this.frm.value;
-console.log(frmValue);
+    console.log(frmValue);
     const body = Object.assign({}, checkNullParams(frmValue));
     this.createQuestion(body);
 
@@ -126,7 +131,19 @@ console.log(frmValue);
           const { meta } = error['error'];
           this._toastrService.error(meta && meta.message ? meta.message : 'CREATE_ERROR');
         });
-        console.log(this.symbols);
 
+  }
+
+  showModalBroferAnswer(code?: string, user?: any) {
+    this.showFormDialogRef = this._dialog
+    .open(DialogBrokerComponent, {
+      disableClose: true,
+      data: {
+        title: '',
+        code,
+        tName: user.tName,
+        content: user.content
+      }
+    });
   }
 }

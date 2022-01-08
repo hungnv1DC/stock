@@ -11,11 +11,11 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, finalize, map, startWith, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  selector: 'app-trader',
+  templateUrl: './trader.component.html',
+  styleUrls: ['./trader.component.scss']
 })
-export class AboutComponent extends BaseComponent implements OnInit {
+export class TraderComponent extends BaseComponent implements OnInit {
   // topSymbols$: Observable<any[]> = this.projectService.getTopSymbols();
   // myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
@@ -23,7 +23,7 @@ export class AboutComponent extends BaseComponent implements OnInit {
   symbols: any[] = [];
   filteredOptions: Observable<string[]>;
 
-  topSymbols: any[] = [];
+  topQuestions: any[] = [];
 
   frm: FormGroup;
   isLoading: boolean;
@@ -54,12 +54,12 @@ export class AboutComponent extends BaseComponent implements OnInit {
   ) {
     super();
 
-    this.projectService.getTopSymbols().subscribe(data => {
+    this.projectService.getTopTraderQuestion().subscribe(data => {
       if (data) {
         data.forEach(element => {
           element.isCollapsed = true;
         });
-        this.topSymbols = data;
+        this.topQuestions = data;
       }
     });
     this.getSymbols();
@@ -68,7 +68,6 @@ export class AboutComponent extends BaseComponent implements OnInit {
     super.ngOnInit();
     this.frm.reset();
     const { code } = this.frm.controls;
-console.log( this.frm.controls);
     this.filteredOptions = code.valueChanges.pipe(
       startWith(''),
       map(value => this.filter(value)),

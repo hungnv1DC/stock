@@ -1,0 +1,11 @@
+.mat-confirm {
+    background: #039be5;
+    color: #ffffff;
+}
+:host ::ng-deep .mat-form-field-infix {
+    display: flex !important;
+}
+.prefix-code {
+    color: darkgray;
+    padding-top: 2px;
+}

@@ -1,0 +1,49 @@
+<h1 matDialogTitle class="confirm-title">
+  {{data.tName}}
+</h1>
+<div mat-dialog-content class="w-512">
+  <div class="media">
+    <div class="mr-5">
+      <strong>{{data.code}}:</strong>
+    </div>
+    <div class="media-body">
+      <div class="mb-5" [innerHTML]="data.content"></div>
+
+    </div>
+  </div>
+  <form class="mt-5" [formGroup]="frm">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- code -->
+        <mat-form-field class="w-100">
+          <mat-label>Mã cổ phiếu</mat-label>
+          <input class="text-input" matInput formControlName="code" required placeholder="Code"  />
+          <mat-error *ngIf="formErrors.code" class="mb-8">
+            {{ formErrors.code }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <!-- price -->
+        <mat-form-field class="w-100">
+          <input currencyMask matInput formControlName="price" required placeholder="Giá khuyến nghị" [options]="{ suffix: 'đ', prefix: '', precision : 0, thousands: '.', decimal: ',', align: 'left' }"/>
+
+          <mat-error *ngIf="formErrors.price" class="mb-8">
+            {{ formErrors.price }}
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div>
+      <quill-editor [styles]="{'height': '300px'}" formControlName="content"></quill-editor>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="pt-24" fxLayoutAlign="end">
+  <button mat-button class="mr-8" (click)="close()">Hủy</button>
+  <button mat-raised-button class="ml-12 mat-btn mat-light-green-bg" promise-btn type="button" color="primary" (click)="submit()"
+    [disabled]="!frm.valid">
+    Gửi
+  </button>
+</div>

@@ -57,4 +57,20 @@ export class ProjectService {
   getSingle(id: number): Observable<Project> {
     return this.jsonApiService.get(`/projects/${id}`);
   }
+
+  getTopTraderQuestion(): Observable<any> {
+    return this._http.Get<any>(`${environment.host}/t/questions`, '',);
+  }
+
+  getTopBrokerQuestion(): Observable<any> {
+    return this._http.Get<any>(`${environment.host}/b/top`, '',);
+  }
+
+  public createQustion(body?): Observable<any> {
+    return this._http.Post<any>(`${environment.host}`, `/t/question`, body);
+  }
+
+  public recommendQuestion(body?): Observable<any> {
+    return this._http.Post<any>(`${environment.host}`, `/b/recommend`, body);
+  }
 }

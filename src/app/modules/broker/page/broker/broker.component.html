@@ -5,7 +5,7 @@
         <div class="col-md-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              Trader
+              Broker
             </div>
             <div class="panel-body">
               <table class="table" id="trader">
@@ -66,10 +66,11 @@
                             </thead> -->
                             <tbody>
                               <tr *ngFor="let de of stock.detail">
-                                <td>{{de.bName}}</td>
-                                <td>{{de.bRate}}</td>
-                                <td>{{de.price * 1000 | number}}đ</td>
+                                <td>{{de.tName}}</td>
                                 <td>{{de.content}}</td>
+                                <td>
+                                  <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="showModalBroferAnswer(stock.code, de)">reply</mat-icon>
+                                </td>
                               </tr>
                             </tbody>
                           </table>
@@ -88,36 +89,5 @@
     </div>
   </section>
 
-  <section class="has-divider">
-    <div class="container">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Câu hỏi
-        </div>
-        <div class="panel-body">
-          <form [formGroup]="frm">
-            <mat-form-field class="w-100" appearance="legacy">
-              <mat-label>Mã cổ phiếu</mat-label>
-              <input type="text" placeholder="Mã cổ phiếu"  matInput formControlName="code"
-                [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let symbol of filteredOptions | async" [value]="symbol.symbol">
-                  <span class="mr-3 symbol-color">
-                    {{symbol.symbol}}
-                  </span>
-                  <span>
-                    {{symbol.name}}
-                  </span>
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <quill-editor [styles]="{'height': '300px'}" formControlName="question"></quill-editor>
-            <div class="mt-2">
-              <button mat-raised-button color="primary" [disabled]="!frm.valid" (click)="save()">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+
 </div>

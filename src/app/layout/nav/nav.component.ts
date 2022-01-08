@@ -23,6 +23,8 @@ export class NavComponent implements OnInit, OnDestroy {
   navItems = [
     { link: '/home', title: 'Home' },
     { link: '/about', title: 'Stock Rating' },
+    { link: '/trader', title: 'Trader Top' },
+    { link: '/broker', title: 'Broker Top' },
     { link: '/contact', title: 'Biểu đồ' },
     { link: '/tool', title: 'Tool' }
   ];

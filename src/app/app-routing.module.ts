@@ -28,6 +28,18 @@ const routes: Routes = [
         canActivate: [NoAuthGuard],
       },
       {
+        path: 'trader',
+        loadChildren: () =>
+          import('@modules/trader/trader.module').then(m => m.TraderModule),
+        canActivate: [NoAuthGuard],
+      },
+      {
+        path: 'broker',
+        loadChildren: () =>
+          import('@modules/broker/broker.module').then(m => m.BrokerModule),
+        canActivate: [NoAuthGuard],
+      },
+      {
         path: 'contact',
         loadChildren: () =>
           import('@modules/contact/contact.module').then(m => m.ContactModule)

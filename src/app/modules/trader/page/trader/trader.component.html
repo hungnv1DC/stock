@@ -13,48 +13,29 @@
                   <tr>
                     <th scope="col"></th>
                     <th scope="col">Mã cổ phiếu</th>
-                    <th scope="col">Giá (vnd)</th>
-                    <th scope="col">Vote</th>
+                    <th scope="col">Ngày hỏi</th>
+                    <th scope="col">Nội dung</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <ng-container *ngFor="let stock of topSymbols; let i = index">
+                  <ng-container *ngFor="let question of topQuestions; let i = index">
                     <tr data-toggle="collapse" class="accordion-toggle" [ngClass]="{'even': 0 === i % 2}"
                       (click)="collapse.toggle()">
                       <td>
                         <i class="fa fa-chevron-down"></i>
                       </td>
                       <td>
-                        {{ stock.code }}
+                        {{ question.code }}
                       </td>
-                      <ng-container *ngIf="stock.percent > 0">
-                        <td class="up">
-                          <span class="icon_up sprite"></span>
-                          {{ stock.curPrice | number}}
-                          ({{ stock.percent | number}}%)
-                        </td>
-                      </ng-container>
-                      <ng-container *ngIf="stock.percent < 0">
-                        <td class="down">
-                          <span class="icon_down sprite"></span>
-                          {{ stock.curPrice | number}}
-                          ({{ stock.percent | number}}%)
-                        </td>
-                      </ng-container>
-                      <ng-container *ngIf="stock.percent === 0">
-                        <td class="normal">
-                          <span class="icon_down sprite"></span>
-                          {{ stock.curPrice | number}}
-                          ({{ stock.percent | number}}%)
-                        </td>
-                      </ng-container>
-                      <td>{{ stock.recommendations | number }}</td>
+
+                      <td>{{ question.creationTime }}</td>
+                      <td>{{ question.question }}</td>
                     </tr>
                     <tr>
                       <td colspan="12" class="hiddenRow">
                         <div class="accordian-body collapse" #collapse="ngbCollapse"
-                          [(ngbCollapse)]="stock.isCollapsed">
+                          [(ngbCollapse)]="question.isCollapsed">
                           <table class="table table-info mb-0">
                             <!-- <thead>
                               <tr class="info">
@@ -65,7 +46,7 @@
                               </tr>
                             </thead> -->
                             <tbody>
-                              <tr *ngFor="let de of stock.detail">
+                              <tr *ngFor="let de of question.detail">
                                 <td>{{de.bName}}</td>
                                 <td>{{de.bRate}}</td>
                                 <td>{{de.price * 1000 | number}}đ</td>
